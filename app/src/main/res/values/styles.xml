@@ -5,6 +5,14 @@
         <!--<item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>-->
+        <item name="android:actionBarTabBarStyle">@style/MyActionBarTabs</item>
+        <!--兼容低版本-->
+        <item name="actionBarTabBarStyle">@style/MyActionBarTabs</item>
     </style>
 
+    <style name="MyActionBarTabs" parent="Widget.AppCompat.ActionBar.TabView">
+        <item name="android:background">@drawable/actionbar_tab_indicator</item>
+        <!--兼容低版本-->
+        <item name="background">@drawable/actionbar_tab_indicator</item>
+    </style>
 </resources>
