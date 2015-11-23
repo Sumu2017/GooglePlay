@@ -1,12 +1,15 @@
 package com.sumu.googleplay.fragment;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+
+import com.lidroid.xutils.bitmap.PauseOnScrollListener;
+import com.sumu.googleplay.adapter.SubjectAdapter;
+import com.sumu.googleplay.bean.SubjectInfo;
+import com.sumu.googleplay.protocol.SubjectProtocol;
+import com.sumu.googleplay.view.BaseListView;
+import com.sumu.googleplay.view.LoadingPage;
+
+import java.util.List;
 
 /**
  * ==============================
@@ -18,12 +21,25 @@ import android.widget.TextView;
  * <p/>
  * ==============================
  */
-public class SubjectFragment extends Fragment{
-    @Nullable
+public class SubjectFragment extends BaseFragment{
+
+    private List<SubjectInfo> subjectInfos;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        TextView textView=new TextView(getActivity());
-        textView.setText("SubjectFragment");
-        return textView;
+    protected LoadingPage.LoadResult load() {
+        SubjectProtocol subjectProtocol=new SubjectProtocol();
+        subjectInfos = subjectProtocol.load(0);
+        return checkData(subjectInfos);
     }
+
+    @Override
+    protected View createSuccessView() {
+        BaseListView listView=new BaseListView(getActivity());
+        SubjectAdapter subjectAdapter=new SubjectAdapter(getActivity(),subjectInfos,bitmapUtils);
+        listView.setOnScrollListener(new PauseOnScrollListener(bitmapUtils,false,true));
+        listView.setAdapter(subjectAdapter);
+        return listView;
+    }
+
+
 }

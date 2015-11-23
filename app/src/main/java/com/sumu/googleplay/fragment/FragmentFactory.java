@@ -1,7 +1,5 @@
 package com.sumu.googleplay.fragment;
 
-import android.support.v4.app.Fragment;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,10 +14,10 @@ import java.util.Map;
  * ==============================
  */
 public class FragmentFactory {
-    private static Map<Integer, Fragment> fragmentMap = new HashMap<>();
+    private static Map<Integer, BaseFragment> fragmentMap = new HashMap<>();
 
-    public static Fragment createFragment(int position) {
-        Fragment fragment = null;
+    public static BaseFragment createFragment(int position) {
+        BaseFragment fragment = null;
         fragment = fragmentMap.get(position);//在集合中重新取出Fragment
         if (fragment != null) {//如果在结合中有则直接返回
             return fragment;

@@ -1,12 +1,9 @@
 package com.sumu.googleplay.fragment;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.sumu.googleplay.view.LoadingPage;
 
 /**
  * ==============================
@@ -18,12 +15,17 @@ import android.widget.TextView;
  * <p/>
  * ==============================
  */
-public class GameFragment extends Fragment{
-    @Nullable
+public class GameFragment extends BaseFragment{
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    protected View createSuccessView() {
         TextView textView=new TextView(getActivity());
-        textView.setText("GameFragment");
+        textView.setText("加载成功。。。。");
         return textView;
     }
+
+    @Override
+    protected LoadingPage.LoadResult load() {
+        return LoadingPage.LoadResult.error;
+    }
+
 }
