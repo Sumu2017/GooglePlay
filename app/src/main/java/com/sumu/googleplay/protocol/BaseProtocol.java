@@ -1,7 +1,9 @@
 package com.sumu.googleplay.protocol;
 
+import android.os.SystemClock;
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
 import com.sumu.googleplay.http.HttpHelper;
 import com.sumu.googleplay.utils.FileUtils;
 import com.sumu.googleplay.utils.MD5Encoder;
@@ -21,19 +23,24 @@ import java.io.StringWriter;
  * 时间：2015/11/23   22:29
  * <p>
  * 描述：
- * <p>数据读取基类
+ * <p>数据读取协议基类
  * ==============================
  */
 public abstract class BaseProtocol<T> {
+    protected Gson gson;
+    public BaseProtocol() {
+        gson=new Gson();
+    }
 
     public T load(int index) {
+        SystemClock.sleep(1000);
         //加载本地数据
-        String result = loadLocal();
+        String result = loadLocal(index);
         if (TextUtils.isEmpty(result)) {
             //请求服务器
             result = loadServer(index);
             if (!TextUtils.isEmpty(result)) {
-                saveLocal(result);
+                saveLocal(index,result);
             }
         }
         if (!TextUtils.isEmpty(result)) {
@@ -47,12 +54,13 @@ public abstract class BaseProtocol<T> {
     /**
      * 保存数据到本地
      *
+     * @param index
      * @param result
      */
-    private void saveLocal(String result) {
+    private void saveLocal(int index, String result) {
         File file = null;
         try {
-            file = new File(FileUtils.getCacheDir(), MD5Encoder.encode(getUrl()));
+            file = new File(FileUtils.getCacheDir(), MD5Encoder.encode(getUrl()+index));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -90,7 +98,7 @@ public abstract class BaseProtocol<T> {
     private String loadServer(int index) {
         HttpHelper.HttpResult httpResult = HttpHelper.get(getUrl()+index);
         String result = null;
-        if (httpResult.getCode() == 200) {
+        if (httpResult!=null) {
             result = httpResult.getString();
         }
         return result;
@@ -100,12 +108,13 @@ public abstract class BaseProtocol<T> {
      * 从本地读取数据
      *
      * @return
+     * @param index
      */
-    private String loadLocal() {
+    private String loadLocal(int index) {
         //  如果发现文件已经过期了 就不要再去复用缓存了
         File file = null;
         try {
-            file = new File(FileUtils.getCacheDir(), MD5Encoder.encode(getUrl()));
+            file = new File(FileUtils.getCacheDir(), MD5Encoder.encode(getUrl()+index));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -115,16 +124,16 @@ public abstract class BaseProtocol<T> {
             fileReader = new FileReader(file);
             bufferedReader = new BufferedReader(fileReader);
             long outOfDate = Long.parseLong(bufferedReader.readLine());
-            if (System.currentTimeMillis() > outOfDate) {
+            /*if (System.currentTimeMillis() > outOfDate) {
                 return null;
-            } else {
+            } else {*/
                 String str = null;
                 StringWriter result = new StringWriter();
                 while ((str = bufferedReader.readLine()) != null) {
                     result.write(str);
                 }
                 return result.toString();
-            }
+           /* }*/
         } catch (IOException e) {
             e.printStackTrace();
             return null;

@@ -14,29 +14,35 @@ import java.util.List;
 /**
  * ==============================
  * 作者：苏幕
- * <p/>
+ * <p>
  * 时间：2015/11/22   19:39
- * <p/>
+ * <p>
  * 描述：
- * <p/>
+ * <p>专题界面
  * ==============================
  */
-public class SubjectFragment extends BaseFragment{
+public class SubjectFragment extends BaseFragment {
 
     private List<SubjectInfo> subjectInfos;
+    private SubjectProtocol subjectProtocol;
 
     @Override
     protected LoadingPage.LoadResult load() {
-        SubjectProtocol subjectProtocol=new SubjectProtocol();
+        subjectProtocol = new SubjectProtocol();
         subjectInfos = subjectProtocol.load(0);
         return checkData(subjectInfos);
     }
 
     @Override
     protected View createSuccessView() {
-        BaseListView listView=new BaseListView(getActivity());
-        SubjectAdapter subjectAdapter=new SubjectAdapter(getActivity(),subjectInfos,bitmapUtils);
-        listView.setOnScrollListener(new PauseOnScrollListener(bitmapUtils,false,true));
+        BaseListView listView = new BaseListView(context);
+        SubjectAdapter subjectAdapter = new SubjectAdapter(context, subjectInfos) {
+            @Override
+            protected List<SubjectInfo> getMoreDataFromServer() {
+                return subjectProtocol.load(subjectInfos.size());
+            }
+        };
+        listView.setOnScrollListener(new PauseOnScrollListener(bitmapUtils, false, true));
         listView.setAdapter(subjectAdapter);
         return listView;
     }

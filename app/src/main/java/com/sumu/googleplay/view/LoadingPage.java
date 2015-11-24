@@ -136,7 +136,7 @@ public abstract class LoadingPage extends FrameLayout{
         ThreadManager.getInstance().createLongPool().exexute(new Runnable() {
             @Override
             public void run() {
-                SystemClock.sleep(2000);
+                SystemClock.sleep(1000);
                 final LoadResult loadResult = load();
                 if (loadResult != null) {
                     STATE_NOW = loadResult.getValue();

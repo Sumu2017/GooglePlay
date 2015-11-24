@@ -15,4 +15,6 @@ public class Contacts {
     public static final String HOME_URL = URL + "home?index=";
     public static final String HOME_IMAGE_URL = URL + "image?name=";
     public static final String SUBJECT_URL = URL + "subject?index=";
+    public static final String APP_URL = URL + "app?index=";
+    public static final String GAME_URL = URL + "game?index=";
 }

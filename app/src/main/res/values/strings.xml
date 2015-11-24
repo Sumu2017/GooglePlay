@@ -6,6 +6,7 @@
     <string name="open_drawer">打开抽屉</string>
     <string name="close_drawer">关闭抽屉</string>
     <string name="load_error">加载失败，点击重试</string>
+    <string name="load_more">加载中...</string>
     <string-array name="tab_names">
         <item>首页</item>
         <item>应用</item>

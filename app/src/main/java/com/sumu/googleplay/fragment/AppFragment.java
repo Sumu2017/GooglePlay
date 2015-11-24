@@ -1,31 +1,52 @@
 package com.sumu.googleplay.fragment;
 
 import android.view.View;
-import android.widget.TextView;
 
+import com.lidroid.xutils.bitmap.PauseOnScrollListener;
+import com.sumu.googleplay.adapter.AppAdapter;
+import com.sumu.googleplay.bean.AppInfo;
+import com.sumu.googleplay.protocol.AppProtocol;
+import com.sumu.googleplay.view.BaseListView;
 import com.sumu.googleplay.view.LoadingPage;
+
+import java.util.List;
 
 /**
  * ==============================
  * 作者：苏幕
- * <p/>
+ * <p>
  * 时间：2015/11/22   19:39
- * <p/>
+ * <p>
  * 描述：
- * <p/>
+ * <p/>应用界面
  * ==============================
  */
 public class AppFragment extends BaseFragment {
-    @Override
-    protected View createSuccessView() {
-        TextView textView = new TextView(getActivity());
-        textView.setText("加载成功。。。。");
-        return textView;
-    }
+
+    private List<AppInfo> appInfos;
+    private AppProtocol appProtocol;
 
     @Override
     protected LoadingPage.LoadResult load() {
-        return LoadingPage.LoadResult.error;
+        appProtocol = new AppProtocol();
+        appInfos = appProtocol.load(0);
+        return checkData(appInfos);
     }
+
+
+    @Override
+    protected View createSuccessView() {
+        BaseListView listView = new BaseListView(context);
+        AppAdapter appAdapter = new AppAdapter(context, appInfos) {
+            @Override
+            protected List<AppInfo> getMoreDataFromServer() {
+                return appProtocol.load(appInfos.size());
+            }
+        };
+        listView.setOnScrollListener(new PauseOnScrollListener(bitmapUtils, false, true));
+        listView.setAdapter(appAdapter);
+        return listView;
+    }
+
 
 }

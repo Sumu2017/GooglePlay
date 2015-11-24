@@ -7,10 +7,10 @@ package com.sumu.googleplay.bean;
  * 时间：2015/11/23   16:41
  * <p/>
  * 描述：
- * <p/>首页软件详情
+ * <p/>软件详情
  * ==============================
  */
-public class HomeAppInfo {
+public class AppInfo {
 
     private String des;
     private String downloadUrl;
@@ -21,11 +21,11 @@ public class HomeAppInfo {
     private long size;
     private float stars;
 
-    public HomeAppInfo() {
+    public AppInfo() {
     }
 
-    public HomeAppInfo(String des, String downloadUrl, String iconUrl,
-                       long id, String name, String packageName, long size, float stars) {
+    public AppInfo(String des, String downloadUrl, String iconUrl,
+                   long id, String name, String packageName, long size, float stars) {
         this.des = des;
         this.downloadUrl = downloadUrl;
         this.iconUrl = iconUrl;
@@ -38,7 +38,7 @@ public class HomeAppInfo {
 
     @Override
     public String toString() {
-        return "HomeAppInfo{" +
+        return "AppInfo{" +
                 "des='" + des + '\'' +
                 ", downloadUrl='" + downloadUrl + '\'' +
                 ", iconUrl='" + iconUrl + '\'' +

@@ -1,9 +1,15 @@
 package com.sumu.googleplay.fragment;
 
 import android.view.View;
-import android.widget.TextView;
 
+import com.lidroid.xutils.bitmap.PauseOnScrollListener;
+import com.sumu.googleplay.adapter.AppAdapter;
+import com.sumu.googleplay.bean.AppInfo;
+import com.sumu.googleplay.protocol.GameProtocol;
+import com.sumu.googleplay.view.BaseListView;
 import com.sumu.googleplay.view.LoadingPage;
+
+import java.util.List;
 
 /**
  * ==============================
@@ -12,20 +18,35 @@ import com.sumu.googleplay.view.LoadingPage;
  * 时间：2015/11/22   19:39
  * <p/>
  * 描述：
- * <p/>
+ * <p/>游戏界面
  * ==============================
  */
 public class GameFragment extends BaseFragment{
-    @Override
-    protected View createSuccessView() {
-        TextView textView=new TextView(getActivity());
-        textView.setText("加载成功。。。。");
-        return textView;
-    }
+
+    private List<AppInfo> gameAppInfos;
+    private GameProtocol gameProtocol;
 
     @Override
     protected LoadingPage.LoadResult load() {
-        return LoadingPage.LoadResult.error;
+        gameProtocol = new GameProtocol();
+        gameAppInfos = gameProtocol.load(0);
+        return checkData(gameAppInfos);
     }
+
+    @Override
+    protected View createSuccessView() {
+        BaseListView listView=new BaseListView(context);
+        AppAdapter gameAppAdapter= new AppAdapter(context, gameAppInfos) {
+            @Override
+            protected List<AppInfo> getMoreDataFromServer() {
+                return gameProtocol.load(gameAppInfos.size());
+            }
+        };
+        listView.setOnScrollListener(new PauseOnScrollListener(bitmapUtils,false,true));
+        listView.setAdapter(gameAppAdapter);
+        return listView;
+    }
+
+
 
 }

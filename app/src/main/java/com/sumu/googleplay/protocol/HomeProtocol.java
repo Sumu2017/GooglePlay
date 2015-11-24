@@ -1,9 +1,8 @@
 package com.sumu.googleplay.protocol;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sumu.googleplay.Contacts;
-import com.sumu.googleplay.bean.HomeAppInfo;
+import com.sumu.googleplay.bean.AppInfo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,23 +17,28 @@ import java.util.List;
  * 时间：2015/11/23   21:30
  * <p>
  * 描述：
- * <p>
+ * <p>首页数据协议
  * ==============================
  */
-public class HomeProtocol extends BaseProtocol<List<HomeAppInfo>> {
-
+public class HomeProtocol extends BaseProtocol<List<AppInfo>> {
+    private String[] imageUrl;
     @Override
-    public List<HomeAppInfo> parseJson(String result) {
+    public List<AppInfo> parseJson(String result) {
         JSONArray jsonArray = null;
         try {
             JSONObject jsonObject = new JSONObject(result);
             jsonArray = jsonObject.getJSONArray("list");
+            JSONArray imageArray=jsonObject.getJSONArray("picture");
+            imageUrl=new String[imageArray.length()];
+            for (int i=0;i<imageArray.length();i++){
+                imageUrl[i]= (String) imageArray.get(i);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Gson gson = new Gson();
-        return gson.fromJson(jsonArray.toString(), new TypeToken<List<HomeAppInfo>>() {
+        List<AppInfo> homeAppInfos=gson.fromJson(jsonArray.toString(), new TypeToken<List<AppInfo>>() {
         }.getType());
+        return homeAppInfos;
     }
 
     @Override
@@ -42,4 +46,11 @@ public class HomeProtocol extends BaseProtocol<List<HomeAppInfo>> {
         return Contacts.HOME_URL;
     }
 
+    /**
+     * 获取ViewPager的图片地址
+     * @return
+     */
+    public String[] getImageUrl() {
+        return imageUrl;
+    }
 }
