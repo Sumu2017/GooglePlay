@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
+import android.widget.Toast;
 
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -15,8 +15,23 @@ import com.sumu.googleplay.R;
 import com.sumu.googleplay.bean.DetailAppInfo;
 import com.sumu.googleplay.protocol.DetailProtocol;
 import com.sumu.googleplay.view.LoadingPage;
+import com.sumu.googleplay.viewHolder.DetailDesHolder;
+import com.sumu.googleplay.viewHolder.DetailImageHolder;
+import com.sumu.googleplay.viewHolder.DetailInfoHolder;
+import com.sumu.googleplay.viewHolder.DetailSafeHolder;
 
+/**
+ * ==============================
+ * 作者：苏幕
+ * <p>
+ * 时间：2015/11/26   12:25
+ * <p>
+ * 描述：
+ * <p/>应用详情界面
+ * ==============================
+ */
 public class DetailActivity extends BaseActivity {
+
     @ViewInject(R.id.my_toolbar)
     private Toolbar myToolbar;
     private LoadingPage loadingPage;
@@ -81,7 +96,25 @@ public class DetailActivity extends BaseActivity {
      */
     private View createSuccessView() {
         View content = View.inflate(this, R.layout.detail_content, null);
-        ViewUtils.inject(this,content);
+        ViewUtils.inject(this, content);
+        // 添加信息区域
+
+        // 应用程序信息
+        DetailInfoHolder detailInfoHolder = new DetailInfoHolder(this);
+        detailInfoHolder.setDataToView(detailAppInfo);
+        detail_info.addView(detailInfoHolder.getConvertView());
+        //安全标记
+        DetailSafeHolder detailSafeHolder = new DetailSafeHolder(this);
+        detailSafeHolder.setDataToView(detailAppInfo);
+        detail_safe.addView(detailSafeHolder.getConvertView());
+        // 中间图片的展示
+        DetailImageHolder detailImageHolder = new DetailImageHolder(this);
+        detailImageHolder.setDataToView(detailAppInfo);
+        detail_screen.addView(detailImageHolder.getConvertView());
+        //应用简介
+        DetailDesHolder detailDesHolder = new DetailDesHolder(this);
+        detailDesHolder.setDataToView(detailAppInfo);
+        detail_des.addView(detailDesHolder.getConvertView());
         return content;
     }
 
@@ -93,6 +126,12 @@ public class DetailActivity extends BaseActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+        myToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -103,17 +142,5 @@ public class DetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
     }
 
-    /**
-     * 处理菜单条目的点击事件
-     *
-     * @param item
-     * @return
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-       /* if (item.getItemId()==android.R.id.home){
-            finish();
-        }*/
-        return super.onOptionsItemSelected(item);
-    }
+
 }

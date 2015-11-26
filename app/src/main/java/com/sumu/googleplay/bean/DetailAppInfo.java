@@ -25,11 +25,11 @@ public class DetailAppInfo {
     private String version;
     private int id;
     private int size;
-    private int stars;
+    private float stars;
     private List<String> screen;
-    private List<safe> safe;
+    private List<Safe> safe;
 
-    public DetailAppInfo(String author, String date, String des, String downloadNum, String downloadUrl, String iconUrl, String name, String packageName, String version, int id, int size, int stars, List<String> screen, List<DetailAppInfo.safe> safe) {
+    public DetailAppInfo(String author, String date, String des, String downloadNum, String downloadUrl, String iconUrl, String name, String packageName, String version, int id, int size, int stars, List<String> screen, List<DetailAppInfo.Safe> safe) {
         this.author = author;
         this.date = date;
         this.des = des;
@@ -137,7 +137,7 @@ public class DetailAppInfo {
         this.size = size;
     }
 
-    public int getStars() {
+    public float getStars() {
         return stars;
     }
 
@@ -153,11 +153,11 @@ public class DetailAppInfo {
         this.screen = screen;
     }
 
-    public List<DetailAppInfo.safe> getSafe() {
+    public List<DetailAppInfo.Safe> getSafe() {
         return safe;
     }
 
-    public void setSafe(List<DetailAppInfo.safe> safe) {
+    public void setSafe(List<DetailAppInfo.Safe> safe) {
         this.safe = safe;
     }
 
@@ -181,16 +181,16 @@ public class DetailAppInfo {
                 '}';
     }
 
-    public class safe {
+    public class Safe {
         private String safeDes;
-        private String safeDesColor;
+        private int safeDesColor;
         private String safeDesUrl;
         private String safeUrl;
 
-        public safe() {
+        public Safe() {
         }
 
-        public safe(String safeDes, String safeDesColor, String safeDesUrl, String safeUrl) {
+        public Safe(String safeDes, int safeDesColor, String safeDesUrl, String safeUrl) {
             this.safeDes = safeDes;
             this.safeDesColor = safeDesColor;
             this.safeDesUrl = safeDesUrl;
@@ -205,11 +205,11 @@ public class DetailAppInfo {
             this.safeDes = safeDes;
         }
 
-        public String getSafeDesColor() {
+        public int getSafeDesColor() {
             return safeDesColor;
         }
 
-        public void setSafeDesColor(String safeDesColor) {
+        public void setSafeDesColor(int safeDesColor) {
             this.safeDesColor = safeDesColor;
         }
 

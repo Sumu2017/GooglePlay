@@ -7,4 +7,7 @@
     <color name="menu_bg_press">#cecece</color>
     <color name="menu_bg_normal">#f0f1f3</color>
     <color name="detail_screen_bg">#adadad</color>
+    <color name="safe_des_color_1">#ff9900</color>
+    <color name="safe_des_color_2">#00b13e</color>
+    <color name="safe_des_color_3">#7a7a7a</color>
 </resources>

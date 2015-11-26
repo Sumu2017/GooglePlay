@@ -26,4 +26,9 @@
     <string name="tv_about">关于</string>
     <string name="tv_exit">退出</string>
     <string name="app_detail_introduction">简介</string>
+    <string name="item_download">下载:</string>
+    <string name="item_version">版本:</string>
+    <string name="item_date">时间:</string>
+    <string name="item_size">大小:</string>
+    <string name="des_author">作者:</string>
 </resources>
