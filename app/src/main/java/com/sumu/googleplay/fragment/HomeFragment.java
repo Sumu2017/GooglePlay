@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.lidroid.xutils.bitmap.PauseOnScrollListener;
 import com.sumu.googleplay.adapter.AppAdapter;
-import com.sumu.googleplay.adapter.holder.HomeImageViewHolder;
+import com.sumu.googleplay.viewHolder.HomeImageViewHolder;
 import com.sumu.googleplay.bean.AppInfo;
 import com.sumu.googleplay.protocol.HomeProtocol;
 import com.sumu.googleplay.view.BaseListView;
@@ -50,7 +50,7 @@ public class HomeFragment extends BaseFragment {
         View topView=homeImageViewHolder.getConvertView();//得到holder里面管理的View对象
         listView.addHeaderView(topView);//把holder里的view对象，添加到listView的上面
 
-        AppAdapter homeAppAdapter = new AppAdapter(context, homeAppInfos) {
+        AppAdapter homeAppAdapter = new AppAdapter(context, homeAppInfos,listView) {
             @Override
             protected List<AppInfo> getMoreDataFromServer() {
                 return homeProtocol.load(homeAppInfos.size());

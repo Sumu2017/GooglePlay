@@ -32,7 +32,12 @@ public abstract class BaseProtocol<T> {
         gson=new Gson();
     }
 
-    public T load(int index) {
+    /**
+     * 获取数据
+     * @param index  第几页
+     * @return
+     */
+    public T load(Object index) {
         SystemClock.sleep(1000);
         //加载本地数据
         String result = loadLocal(index);
@@ -57,7 +62,7 @@ public abstract class BaseProtocol<T> {
      * @param index
      * @param result
      */
-    private void saveLocal(int index, String result) {
+    private void saveLocal(Object index, String result) {
         File file = null;
         try {
             file = new File(FileUtils.getCacheDir(), MD5Encoder.encode(getUrl()+index));
@@ -95,7 +100,7 @@ public abstract class BaseProtocol<T> {
      * @param index
      * @return
      */
-    private String loadServer(int index) {
+    private String loadServer(Object index) {
         HttpHelper.HttpResult httpResult = HttpHelper.get(getUrl()+index);
         String result = null;
         if (httpResult!=null) {
@@ -110,7 +115,7 @@ public abstract class BaseProtocol<T> {
      * @return
      * @param index
      */
-    private String loadLocal(int index) {
+    private String loadLocal(Object index) {
         //  如果发现文件已经过期了 就不要再去复用缓存了
         File file = null;
         try {

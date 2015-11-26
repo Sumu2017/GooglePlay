@@ -5,7 +5,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 
 import com.sumu.googleplay.adapter.holder.BaseViewHolder;
 import com.sumu.googleplay.adapter.holder.MoreViewHolder;
@@ -23,16 +25,31 @@ import java.util.List;
  * <p>所有ListView适配器的基类
  * ==============================
  */
-public abstract class DefaultAdapter<T> extends BaseAdapter {
+public abstract class DefaultAdapter<T> extends BaseAdapter implements AdapterView.OnItemClickListener {
     protected Context context;
-    private List<T> datas;
+    protected List<T> datas;
     private static final int ITEM_MORE = 0;//加载更多条目
     private static final int ITEM_NORM = 1;//普通条目
-
-    public DefaultAdapter(Context context, List<T> datas) {
+    private ListView listView;
+    public DefaultAdapter(Context context, List<T> datas,ListView listView) {
         this.context = context;
         this.datas = datas;
+        this.listView=listView;
+        listView.setOnItemClickListener(this);
     }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        position=position-listView.getHeaderViewsCount();//获取到顶部条目的数量   位置去掉顶部view的数量
+        onMyItemClick(position);
+    }
+
+    /**
+     * 让子类去实现点击事件的具体操作
+     * @param position
+     */
+    public abstract void onMyItemClick(int position);
+
 
     //根据位置 判断当前条目是什么类型
     @Override
@@ -142,6 +159,7 @@ public abstract class DefaultAdapter<T> extends BaseAdapter {
      * @return
      */
     protected abstract List<T> getMoreDataFromServer();
+
 
 
 }

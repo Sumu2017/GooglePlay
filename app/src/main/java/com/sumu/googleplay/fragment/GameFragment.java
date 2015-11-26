@@ -36,7 +36,7 @@ public class GameFragment extends BaseFragment{
     @Override
     protected View createSuccessView() {
         BaseListView listView=new BaseListView(context);
-        AppAdapter gameAppAdapter= new AppAdapter(context, gameAppInfos) {
+        AppAdapter gameAppAdapter= new AppAdapter(context, gameAppInfos,listView) {
             @Override
             protected List<AppInfo> getMoreDataFromServer() {
                 return gameProtocol.load(gameAppInfos.size());

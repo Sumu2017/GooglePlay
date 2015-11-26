@@ -43,7 +43,7 @@ public abstract class BaseViewHolder {
     }
 
     /**
-     * 再将数据设置到布局空间中
+     * 再将数据设置到布局空间中,需要手动调用
      * @param data
      */
     public abstract void setDataToView(Object data);

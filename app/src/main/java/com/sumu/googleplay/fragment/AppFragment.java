@@ -37,7 +37,7 @@ public class AppFragment extends BaseFragment {
     @Override
     protected View createSuccessView() {
         BaseListView listView = new BaseListView(context);
-        AppAdapter appAdapter = new AppAdapter(context, appInfos) {
+        AppAdapter appAdapter = new AppAdapter(context, appInfos,listView) {
             @Override
             protected List<AppInfo> getMoreDataFromServer() {
                 return appProtocol.load(appInfos.size());

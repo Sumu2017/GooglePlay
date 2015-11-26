@@ -18,6 +18,7 @@ import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.sumu.googleplay.R;
 import com.sumu.googleplay.adapter.ContentAdapter;
+import com.sumu.googleplay.viewHolder.LeftMenuHolder;
 import com.sumu.googleplay.fragment.BaseFragment;
 import com.sumu.googleplay.fragment.FragmentFactory;
 import com.sumu.googleplay.utils.UIUtils;
@@ -66,13 +67,15 @@ public class MainActivity extends BaseActivity implements SearchView.OnQueryText
         pagerTitle.setTabIndicatorColor(Color.parseColor("#FF0084FF"));//设置标签的下滑线的颜色
         contentAdapter = new ContentAdapter(getSupportFragmentManager(),tabNames);
         vpContent.setAdapter(contentAdapter);
-        vpContent.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+        vpContent.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 BaseFragment fragment = FragmentFactory.createFragment(position);
                 fragment.show();//当界面进行切换时，重新请求服务器
             }
         });
+        LeftMenuHolder leftMenuHolder=new LeftMenuHolder(this);
+        leftMenu.addView(leftMenuHolder.getConvertView());
        /* slidingTabLayout.setSelectedIndicatorColors(Color.BLUE);
         slidingTabLayout.setDistributeEvenly(true);
         slidingTabLayout.setViewPager(vpContent);*/

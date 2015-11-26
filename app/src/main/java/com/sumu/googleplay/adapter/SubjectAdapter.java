@@ -1,6 +1,7 @@
 package com.sumu.googleplay.adapter;
 
 import android.content.Context;
+import android.widget.ListView;
 
 import com.sumu.googleplay.adapter.holder.BaseViewHolder;
 import com.sumu.googleplay.adapter.holder.SubjectViewHolder;
@@ -21,8 +22,8 @@ import java.util.List;
 public abstract class SubjectAdapter extends DefaultAdapter<SubjectInfo> {
 
 
-    public SubjectAdapter(Context context, List<SubjectInfo> subjectInfos) {
-        super(context, subjectInfos);
+    public SubjectAdapter(Context context, List<SubjectInfo> datas, ListView listView) {
+        super(context, datas, listView);
     }
 
     @Override
@@ -32,4 +33,9 @@ public abstract class SubjectAdapter extends DefaultAdapter<SubjectInfo> {
 
     @Override
     protected  abstract List<SubjectInfo> getMoreDataFromServer();
+
+    @Override
+    public void onMyItemClick(int position) {
+
+    }
 }

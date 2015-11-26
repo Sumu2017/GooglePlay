@@ -36,7 +36,7 @@ public class SubjectFragment extends BaseFragment {
     @Override
     protected View createSuccessView() {
         BaseListView listView = new BaseListView(context);
-        SubjectAdapter subjectAdapter = new SubjectAdapter(context, subjectInfos) {
+        SubjectAdapter subjectAdapter = new SubjectAdapter(context, subjectInfos,listView) {
             @Override
             protected List<SubjectInfo> getMoreDataFromServer() {
                 return subjectProtocol.load(subjectInfos.size());
