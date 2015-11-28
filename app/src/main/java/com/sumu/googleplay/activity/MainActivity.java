@@ -12,16 +12,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.sumu.googleplay.R;
 import com.sumu.googleplay.adapter.ContentAdapter;
-import com.sumu.googleplay.viewHolder.LeftMenuHolder;
 import com.sumu.googleplay.fragment.BaseFragment;
 import com.sumu.googleplay.fragment.FragmentFactory;
 import com.sumu.googleplay.utils.UIUtils;
+import com.sumu.googleplay.viewHolder.LeftMenuHolder;
 
 public class MainActivity extends BaseActivity implements SearchView.OnQueryTextListener {
     @ViewInject(R.id.drawerLayout)
@@ -95,13 +94,11 @@ public class MainActivity extends BaseActivity implements SearchView.OnQueryText
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
-        return true;
+         return true;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        Toast.makeText(MainActivity.this, newText, Toast.LENGTH_SHORT).show();
         return true;
     }
 }

@@ -18,5 +18,7 @@ public class Contacts {
     public static final String APP_URL = URL + "app?index=";
     public static final String GAME_URL = URL + "game?index=";
     public static final String USER_URL = URL + "user?";
+    public static final String CATEGORY_URL = URL + "category?";
     public static final String DETAIL_URL = URL + "detail?packageName=";
+    public static final String HOT_URL = URL + "hot?";
 }

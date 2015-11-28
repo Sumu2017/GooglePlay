@@ -21,9 +21,9 @@ import com.sumu.googleplay.bean.DetailAppInfo;
 /**
  * ==============================
  * 作者：苏幕
- * <p>
+ * <p/>
  * 时间：2015/11/26   19:18
- * <p>
+ * <p/>
  * 描述：
  * <p>应用详情第四模块 应用简介
  * ==============================
@@ -44,12 +44,11 @@ public class DetailDesHolder extends BaseViewHolder implements View.OnClickListe
     protected View initView() {
         View view = View.inflate(context, R.layout.detail_des, null);
         ViewUtils.inject(this, view);
-        ViewGroup.LayoutParams params = des_content.getLayoutParams();
-        if (getFiveLineHeight() > getMeasuredHeight()) {//如果内容超出5行则将后面的隐藏
-            params.height = getFiveLineHeight();
-        }
-        des_content.setLayoutParams(params);
         des_arrow.setOnClickListener(this);
+        ViewGroup.LayoutParams params = des_content.getLayoutParams();
+        //如果内容只显示5行后面的隐藏
+        params.height = getFiveLineHeight();
+        des_content.setLayoutParams(params);
         return view;
     }
 
@@ -107,6 +106,7 @@ public class DetailDesHolder extends BaseViewHolder implements View.OnClickListe
 
     private boolean flag;
     private ScrollView scrollView;
+
     @Override
     public void onClick(View v) {
         //如果内容不超过5行，则点击无效

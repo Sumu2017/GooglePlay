@@ -31,6 +31,7 @@ public abstract class DefaultAdapter<T> extends BaseAdapter implements AdapterVi
     private static final int ITEM_MORE = 0;//加载更多条目
     private static final int ITEM_NORM = 1;//普通条目
     private ListView listView;
+    private boolean isMoreHolder=true;//是否需要加载更多
     public DefaultAdapter(Context context, List<T> datas,ListView listView) {
         this.context = context;
         this.datas = datas;
@@ -45,16 +46,24 @@ public abstract class DefaultAdapter<T> extends BaseAdapter implements AdapterVi
     }
 
     /**
+     * 是否需要加载更多，默认需要
+     * @param isMoreHolder
+     */
+    public void setIsMoreHolder(boolean isMoreHolder){
+        this.isMoreHolder=isMoreHolder;
+    }
+
+    /**
      * 让子类去实现点击事件的具体操作
      * @param position
      */
     public abstract void onMyItemClick(int position);
 
-
     //根据位置 判断当前条目是什么类型
+    //getItemViewType返回值是0~getViewTypeCount()-1;因此，返条目参数时需要注意参数的大小，否者会出现越界的错误
     @Override
     public int getItemViewType(int position) {
-        if (position == (getCount() - 1)) {//如果是最后一个，则返回加载更多条目类型
+        if (position == (getCount() - 1) && isMoreHolder) {//如果是最后一个，则返回加载更多条目类型
             return ITEM_MORE;
         } else {
             return ITEM_NORM;
@@ -69,7 +78,12 @@ public abstract class DefaultAdapter<T> extends BaseAdapter implements AdapterVi
 
     @Override
     public int getCount() {
-        return datas.size() + 1;
+        if (isMoreHolder){//如果需要加载更多则多加一个Item用来显示加载更多Holder
+            return datas.size() + 1;
+        }else {
+            return datas.size();
+        }
+
     }
 
     @Override
@@ -93,7 +107,7 @@ public abstract class DefaultAdapter<T> extends BaseAdapter implements AdapterVi
                     viewHolder = (BaseViewHolder) convertView.getTag();
                 }
                 break;
-            case ITEM_NORM:
+            default://因为可能还有其他不同的条目，所有用defalut,通过getHolder()由子类去返回不同的条目
                 if (convertView == null) {
                     viewHolder = getHolder();//不能通过构造方法传viewHolder，否则只能显示一个，其他都为空
                 } else {

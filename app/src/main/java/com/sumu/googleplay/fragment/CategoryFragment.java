@@ -1,9 +1,15 @@
 package com.sumu.googleplay.fragment;
 
 import android.view.View;
-import android.widget.TextView;
 
+import com.lidroid.xutils.bitmap.PauseOnScrollListener;
+import com.sumu.googleplay.adapter.CategoryAdapter;
+import com.sumu.googleplay.bean.CategoryInfo;
+import com.sumu.googleplay.protocol.CategoryProtocol;
+import com.sumu.googleplay.view.BaseListView;
 import com.sumu.googleplay.view.LoadingPage;
+
+import java.util.List;
 
 /**
  * ==============================
@@ -12,19 +18,29 @@ import com.sumu.googleplay.view.LoadingPage;
  * 时间：2015/11/22   19:39
  * <p/>
  * 描述：
- * <p/>
+ * <p/>分类界面
  * ==============================
  */
 public class CategoryFragment extends BaseFragment{
-    @Override
-    protected View createSuccessView() {
-        TextView textView=new TextView(getActivity());
-        textView.setText("加载成功。。。。");
-        return textView;
-    }
+
+    private List<CategoryInfo> categoryInfos;
 
     @Override
     protected LoadingPage.LoadResult load() {
-        return LoadingPage.LoadResult.error;
+        CategoryProtocol categoryProtocol= new CategoryProtocol();
+        categoryInfos = categoryProtocol.load(0);
+        return checkData(categoryInfos);
     }
+
+    @Override
+    protected View createSuccessView() {
+        BaseListView listView=new BaseListView(context);
+        CategoryAdapter categoryAdapter=new CategoryAdapter(context,categoryInfos, listView);
+        categoryAdapter.setIsMoreHolder(false);
+        listView.setOnScrollListener(new PauseOnScrollListener(bitmapUtils, false, true));
+        listView.setAdapter(categoryAdapter);
+        return listView;
+    }
+
+
 }

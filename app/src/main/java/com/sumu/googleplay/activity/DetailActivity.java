@@ -7,7 +7,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
-import android.widget.Toast;
 
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -15,6 +14,7 @@ import com.sumu.googleplay.R;
 import com.sumu.googleplay.bean.DetailAppInfo;
 import com.sumu.googleplay.protocol.DetailProtocol;
 import com.sumu.googleplay.view.LoadingPage;
+import com.sumu.googleplay.viewHolder.DetailBottomHolder;
 import com.sumu.googleplay.viewHolder.DetailDesHolder;
 import com.sumu.googleplay.viewHolder.DetailImageHolder;
 import com.sumu.googleplay.viewHolder.DetailInfoHolder;
@@ -97,8 +97,6 @@ public class DetailActivity extends BaseActivity {
     private View createSuccessView() {
         View content = View.inflate(this, R.layout.detail_content, null);
         ViewUtils.inject(this, content);
-        // 添加信息区域
-
         // 应用程序信息
         DetailInfoHolder detailInfoHolder = new DetailInfoHolder(this);
         detailInfoHolder.setDataToView(detailAppInfo);
@@ -115,6 +113,10 @@ public class DetailActivity extends BaseActivity {
         DetailDesHolder detailDesHolder = new DetailDesHolder(this);
         detailDesHolder.setDataToView(detailAppInfo);
         detail_des.addView(detailDesHolder.getConvertView());
+        //最下方三个按钮
+        DetailBottomHolder detailBottomHolder=new DetailBottomHolder(this);
+        detailBottomHolder.setDataToView(detailAppInfo);
+        bottom_layout.addView(detailBottomHolder.getConvertView());
         return content;
     }
 

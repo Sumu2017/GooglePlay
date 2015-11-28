@@ -61,7 +61,7 @@ public abstract class BaseFragment extends Fragment {
 
 
     /**
-     * 当数据成功后所展示的界面
+     * 当获取数据成功后所展示的界面
      *
      * @return
      */

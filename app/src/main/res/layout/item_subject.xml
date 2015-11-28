@@ -1,30 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sumu="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-    >
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="9dp"
         android:layout_marginRight="9dp"
-        android:background="@drawable/list_item_bg" >
+        android:background="@drawable/list_item_bg">
 
-        <ImageView
-            android:id="@+id/item_icon"
-            android:layout_width="444dp"
-            android:layout_height="183dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_default" 
-            android:padding="5dp"/>
+        <com.sumu.googleplay.view.RatioLayout
+            android:id="@+id/rl_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            sumu:ratio="2.43">
+
+            <ImageView
+                android:id="@+id/item_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_default" />
+        </com.sumu.googleplay.view.RatioLayout>
 
         <TextView
             android:id="@+id/item_txt"
             style="@style/TitleStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_below="@id/item_icon"
+            android:layout_below="@id/rl_layout"
             android:gravity="center_vertical"
             android:paddingBottom="5dp"
             android:paddingLeft="5dp"

@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/detail_safe"
-                android:background="@color/detail_screen_bg"
+                 android:background="@color/detail_screen_bg"
                 android:fillViewport="true"
                 android:padding="5dp"
                 android:scrollbars="none" />
