@@ -3,9 +3,9 @@ package com.sumu.googleplay.fragment;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.sumu.googleplay.R;
 import com.sumu.googleplay.protocol.TopProtocol;
 import com.sumu.googleplay.utils.UIUtils;
+import com.sumu.googleplay.view.FlowLayout;
 import com.sumu.googleplay.view.LoadingPage;
 
 import java.util.List;
@@ -41,10 +42,11 @@ public class TopFragment extends BaseFragment {
 
     @Override
     protected View createSuccessView() {
+        int padding=UIUtils.dip2px(context,10);
         ScrollView scrollView=new ScrollView(context);
         scrollView.setBackgroundResource(R.drawable.grid_item_bg_normal);
-        LinearLayout linearLayout = new LinearLayout(context);
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        FlowLayout flowLayout = new FlowLayout(context);
+        flowLayout.setPadding(padding,padding,padding,padding);
         Drawable pressed=UIUtils.createShape(Color.GRAY);//被按下的颜色
         for (int i = 0; i < datas.size(); i++) {
             TextView textView = new TextView(context);
@@ -55,18 +57,19 @@ public class TopFragment extends BaseFragment {
             Drawable normal=UIUtils.createShape(UIUtils.getColor());//正常的颜色
             StateListDrawable stateListDrawable = UIUtils.getStateListDrawable(pressed, normal);//状态选择器
             textView.setBackgroundDrawable(stateListDrawable);
-            int padding = UIUtils.dip2px(context, 5);
-            textView.setPadding(padding, padding, padding, padding);
+            int textViewPadding = UIUtils.dip2px(context, 5);
+            textView.setPadding(textViewPadding, textViewPadding, textViewPadding, textViewPadding);
+            textView.setGravity(Gravity.CENTER);
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context,content,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, content, Toast.LENGTH_SHORT).show();
                 }
             });
-            linearLayout.addView(textView, new LinearLayout.LayoutParams(
+            flowLayout.addView(textView, new FlowLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         }
-        scrollView.addView(linearLayout);
+        scrollView.addView(flowLayout);
         return scrollView;
     }
 
