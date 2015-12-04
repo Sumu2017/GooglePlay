@@ -21,4 +21,5 @@ public class Contacts {
     public static final String CATEGORY_URL = URL + "category?";
     public static final String DETAIL_URL = URL + "detail?packageName=";
     public static final String HOT_URL = URL + "hot?";
+    public static final String RECOMMEND_URL = URL + "recommend?";
 }

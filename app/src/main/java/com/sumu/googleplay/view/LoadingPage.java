@@ -82,7 +82,7 @@ public abstract class LoadingPage extends FrameLayout{
             this.addView(emptyView, new FrameLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         }
-
+        showPage();// 根据不同的状态显示不同的界面
     }
 
     //根据不同的状态显示不同的界面
@@ -130,7 +130,9 @@ public abstract class LoadingPage extends FrameLayout{
     //根据服务器的数据切换不同的状态
     public void show() {
         //加载错误后，点击重新加载后需要改变状态
-        STATE_NOW = STATE_LOADING;
+        if (STATE_NOW == STATE_ERROR || STATE_NOW == STATE_EMPTY) {
+            STATE_NOW = STATE_LOADING;
+        }
         //请求服务器，获取服务器上的数据，进行判断，返回一个结果
         showPage();//状态改变了，重新判断当前应该显示那个界面
         ThreadManager.getInstance().createLongPool().exexute(new Runnable() {

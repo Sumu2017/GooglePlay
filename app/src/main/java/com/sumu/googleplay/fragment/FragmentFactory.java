@@ -31,8 +31,10 @@ public class FragmentFactory {
         } else if (position == 3) {
             fragment = new SubjectFragment();
         } else if (position == 4) {
-            fragment = new CategoryFragment();
+            fragment = new RecommentFragment();
         } else if (position == 5) {
+            fragment = new CategoryFragment();
+        } else if (position == 6) {
             fragment = new TopFragment();
         }
         if (fragment != null) {

@@ -1,5 +1,6 @@
 package com.sumu.googleplay.viewHolder;
 
+import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.util.TypedValue;
@@ -9,6 +10,7 @@ import android.view.ViewParent;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -39,12 +41,15 @@ public class DetailDesHolder extends BaseViewHolder implements View.OnClickListe
     private TextView des_author;
     @ViewInject(R.id.des_arrow)
     private ImageView des_arrow;
+    @ViewInject(R.id.des_layout)
+    private RelativeLayout des_layout;
 
     @Override
     protected View initView() {
         View view = View.inflate(context, R.layout.detail_des, null);
         ViewUtils.inject(this, view);
         des_arrow.setOnClickListener(this);
+        des_layout.setOnClickListener(this);
         ViewGroup.LayoutParams params = des_content.getLayoutParams();
         //如果内容只显示5行后面的隐藏
         params.height = getFiveLineHeight();
@@ -110,7 +115,7 @@ public class DetailDesHolder extends BaseViewHolder implements View.OnClickListe
     @Override
     public void onClick(View v) {
         //如果内容不超过5行，则点击无效
-        if ((v.getId() == R.id.des_arrow) && (getFiveLineHeight() < getMeasuredHeight())) {
+        if ((v.getId() == R.id.des_layout) && (getFiveLineHeight() < getMeasuredHeight())) {
             int startHeight = 0;
             int targetHeight = 0;
             Animation animation = null;
@@ -143,6 +148,27 @@ public class DetailDesHolder extends BaseViewHolder implements View.OnClickListe
             });
             animator.setDuration(500);
             animator.start();
+            des_layout.setEnabled(false);//防止用户重复的点击，出现OOM的情况，所有设置当在动画过程中点击无效
+            animator.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    des_layout.setEnabled(true);
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+
+                }
+            });
         }
     }
 }

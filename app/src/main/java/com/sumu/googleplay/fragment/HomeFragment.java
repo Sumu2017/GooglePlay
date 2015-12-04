@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.lidroid.xutils.bitmap.PauseOnScrollListener;
 import com.sumu.googleplay.adapter.AppAdapter;
-import com.sumu.googleplay.viewHolder.HomeImageViewHolder;
+import com.sumu.googleplay.viewHolder.HomePicTitleHolder;
 import com.sumu.googleplay.bean.AppInfo;
 import com.sumu.googleplay.protocol.HomeProtocol;
 import com.sumu.googleplay.view.BaseListView;
@@ -45,7 +45,7 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected View createSuccessView() {
         BaseListView listView = new BaseListView(context);
-        HomeImageViewHolder homeImageViewHolder=new HomeImageViewHolder(context);
+        HomePicTitleHolder homeImageViewHolder=new HomePicTitleHolder(context);
         homeImageViewHolder.setDataToView(homeProtocol.getImageUrl());//将数据传入holder中
         View topView=homeImageViewHolder.getConvertView();//得到holder里面管理的View对象
         listView.addHeaderView(topView);//把holder里的view对象，添加到listView的上面

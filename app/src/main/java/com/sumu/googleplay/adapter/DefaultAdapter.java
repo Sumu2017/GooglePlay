@@ -174,6 +174,4 @@ public abstract class DefaultAdapter<T> extends BaseAdapter implements AdapterVi
      */
     protected abstract List<T> getMoreDataFromServer();
 
-
-
 }

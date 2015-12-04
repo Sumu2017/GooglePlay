@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
+import android.os.Handler;
 
 import com.sumu.googleplay.BaseApplication;
 
@@ -24,7 +25,7 @@ import java.util.Random;
 public class UIUtils {
 
     public static Resources getResources() {
-        return BaseApplication.getBaseApplication().getResources();
+        return BaseApplication.getApplication().getResources();
     }
 
     /**
@@ -89,5 +90,41 @@ public class UIUtils {
         stateListDrawable.addState(new int[]{android.R.attr.state_pressed},pressed);
         stateListDrawable.addState(new int[]{},normal);
         return stateListDrawable;
+    }
+
+    //判断当前的线程是不是在主线程
+    public static boolean isRunInMainThread() {
+        return android.os.Process.myTid() == getMainThreadId();
+    }
+
+    public static void runInMainThread(Runnable runnable) {
+        if (isRunInMainThread()) {
+            runnable.run();
+        } else {
+            post(runnable);
+        }
+    }
+
+    /** 获取主线程的handler */
+    public static Handler getHandler() {
+        return BaseApplication.getMainThreadHandler();
+    }
+
+    /** 延时在主线程执行runnable */
+    public static boolean postDelayed(Runnable runnable, long delayMillis) {
+        return getHandler().postDelayed(runnable, delayMillis);
+    }
+
+    /** 在主线程执行runnable */
+    public static boolean post(Runnable runnable) {
+        return getHandler().post(runnable);
+    }
+
+    public static Thread getMainThread() {
+        return BaseApplication.getMainThread();
+    }
+
+    public static long getMainThreadId() {
+        return BaseApplication.getMainThreadId();
     }
 }

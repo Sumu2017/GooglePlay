@@ -5,7 +5,6 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,35 +38,35 @@ public class TopFragment extends BaseFragment {
         return checkData(datas);
     }
 
-
     @Override
     protected View createSuccessView() {
         int padding=UIUtils.dip2px(context,10);
+        //防止在小屏手机上显示不全，需要通过scrollView包裹主界面
         ScrollView scrollView=new ScrollView(context);
+        scrollView.setFillViewport(true);//设置可以填充父窗体
         scrollView.setBackgroundResource(R.drawable.grid_item_bg_normal);
         FlowLayout flowLayout = new FlowLayout(context);
-        flowLayout.setPadding(padding,padding,padding,padding);
+        flowLayout.setPadding(padding, padding, padding, padding);
         Drawable pressed=UIUtils.createShape(Color.GRAY);//被按下的颜色
         for (int i = 0; i < datas.size(); i++) {
             TextView textView = new TextView(context);
             final String content=datas.get(i);
             textView.setText(content);
             textView.setTextColor(Color.WHITE);
-            textView.setTextSize(18);
+            textView.setTextSize(16);
+            textView.setGravity(Gravity.CENTER);
             Drawable normal=UIUtils.createShape(UIUtils.getColor());//正常的颜色
             StateListDrawable stateListDrawable = UIUtils.getStateListDrawable(pressed, normal);//状态选择器
             textView.setBackgroundDrawable(stateListDrawable);
             int textViewPadding = UIUtils.dip2px(context, 5);
             textView.setPadding(textViewPadding, textViewPadding, textViewPadding, textViewPadding);
-            textView.setGravity(Gravity.CENTER);
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(context, content, Toast.LENGTH_SHORT).show();
                 }
             });
-            flowLayout.addView(textView, new FlowLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            flowLayout.addView(textView);
         }
         scrollView.addView(flowLayout);
         return scrollView;

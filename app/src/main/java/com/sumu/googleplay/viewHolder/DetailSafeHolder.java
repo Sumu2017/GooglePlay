@@ -1,5 +1,6 @@
 package com.sumu.googleplay.viewHolder;
 
+import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.view.View;
@@ -127,6 +128,27 @@ public class DetailSafeHolder extends BaseViewHolder implements View.OnClickList
             });
             animator.setDuration(500);
             animator.start();
+            safe_layout.setEnabled(false);//防止用户重复的点击，出现OOM的情况，所有设置当在动画过程中点击无效
+            animator.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    safe_layout.setEnabled(true);
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+
+                }
+            });
         }
     }
     /**

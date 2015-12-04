@@ -26,15 +26,16 @@ import java.util.List;
  */
 public abstract class BaseFragment extends Fragment {
 
-    protected BitmapUtils bitmapUtils ;
+    protected BitmapUtils bitmapUtils;
     private LoadingPage loadingPage;
     protected Context context;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         bitmapUtils = BitmapHelper.getBitmapUtils(getActivity());
-        context=getActivity();
+        context = getActivity();
         if (loadingPage == null) {
-            loadingPage = new LoadingPage(getActivity()){
+            loadingPage = new LoadingPage(getActivity()) {
 
                 @Override
                 protected View createSuccessView() {
@@ -54,7 +55,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public void show() {
-        if (loadingPage!=null){
+        if (loadingPage != null) {
             loadingPage.show();
         }
     }
@@ -66,7 +67,6 @@ public abstract class BaseFragment extends Fragment {
      * @return
      */
     protected abstract View createSuccessView();
-
 
 
     /**
