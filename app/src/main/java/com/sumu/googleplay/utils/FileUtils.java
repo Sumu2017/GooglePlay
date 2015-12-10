@@ -18,6 +18,15 @@ public class FileUtils {
     private static final String ROOT = "GooglePlay";
     private static final String CACHE = "cache";
     private static final String ICON = "icon";
+    private static final String DOWN_APK = "downloadApk";
+
+    /**
+     * 获取下载APK的文件夹
+     * @return
+     */
+    public static File getApkDir(){
+        return getDir(DOWN_APK);
+    }
 
     /**
      * 获取图片路径

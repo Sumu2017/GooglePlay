@@ -39,6 +39,7 @@ public class DetailActivity extends BaseActivity {
     private FrameLayout flContent;
     private String packageName;
     private DetailAppInfo detailAppInfo;
+    private DetailBottomHolder detailBottomHolder;
 
     @Override
     protected void init() {
@@ -114,8 +115,9 @@ public class DetailActivity extends BaseActivity {
         detailDesHolder.setDataToView(detailAppInfo);
         detail_des.addView(detailDesHolder.getConvertView());
         //最下方三个按钮
-        DetailBottomHolder detailBottomHolder=new DetailBottomHolder(this);
+        detailBottomHolder = new DetailBottomHolder(this);
         detailBottomHolder.setDataToView(detailAppInfo);
+        detailBottomHolder.startObserver();
         bottom_layout.addView(detailBottomHolder.getConvertView());
         return content;
     }
@@ -144,5 +146,19 @@ public class DetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (detailBottomHolder!=null){
+            detailBottomHolder.startObserver();
+        }
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (detailBottomHolder!=null){
+            detailBottomHolder.stopObserver();
+        }
+    }
 }

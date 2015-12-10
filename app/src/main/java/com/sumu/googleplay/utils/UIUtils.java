@@ -87,8 +87,8 @@ public class UIUtils {
      */
     public static StateListDrawable getStateListDrawable(Drawable pressed,Drawable normal){
         StateListDrawable stateListDrawable=new StateListDrawable();
-        stateListDrawable.addState(new int[]{android.R.attr.state_pressed},pressed);
-        stateListDrawable.addState(new int[]{},normal);
+        stateListDrawable.addState(new int[]{android.R.attr.state_pressed}, pressed);
+        stateListDrawable.addState(new int[]{}, normal);
         return stateListDrawable;
     }
 
@@ -126,5 +126,9 @@ public class UIUtils {
 
     public static long getMainThreadId() {
         return BaseApplication.getMainThreadId();
+    }
+
+    public static Context getContext() {
+        return BaseApplication.getApplication();
     }
 }

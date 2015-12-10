@@ -27,6 +27,7 @@ public class HomeFragment extends BaseFragment {
 
     private List<AppInfo> homeAppInfos;
     private HomeProtocol homeProtocol;
+    private AppAdapter homeAppAdapter;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -50,12 +51,13 @@ public class HomeFragment extends BaseFragment {
         View topView=homeImageViewHolder.getConvertView();//得到holder里面管理的View对象
         listView.addHeaderView(topView);//把holder里的view对象，添加到listView的上面
 
-        AppAdapter homeAppAdapter = new AppAdapter(context, homeAppInfos,listView) {
+        homeAppAdapter = new AppAdapter(context, homeAppInfos,listView) {
             @Override
             protected List<AppInfo> getMoreDataFromServer() {
                 return homeProtocol.load(homeAppInfos.size());
             }
         };
+        homeAppAdapter.startObserver();
         // 第二个参数 慢慢滑动的时候是否加载图片 false  加载   true 不加载
         //  第三个参数  飞速滑动的时候是否加载图片  true 不加载
         listView.setOnScrollListener(new PauseOnScrollListener(bitmapUtils, false, true));
@@ -63,4 +65,21 @@ public class HomeFragment extends BaseFragment {
         return listView;
     }
 
+    /** 可见时，需要启动监听，以便随时根据下载状态刷新页面 */
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(homeAppAdapter!=null){
+            homeAppAdapter.startObserver();
+            homeAppAdapter.notifyDataSetChanged();
+        }
+    }
+    /** 不可见时，需要关闭监听 */
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (homeAppAdapter != null) {
+            homeAppAdapter.stopObserver();
+        }
+    }
 }

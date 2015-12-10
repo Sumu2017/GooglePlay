@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/bottom_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <Button
         android:id="@+id/bottom_favorites"
@@ -12,10 +12,9 @@
         android:layout_margin="6dp"
         android:background="@drawable/detail_btn"
         android:gravity="center"
-        android:textColor="#ffffff"
-        android:textSize="16dp" 
         android:text="收藏"
-        />
+        android:textColor="#ffffff"
+        android:textSize="16dp" />
 
     <Button
         android:id="@+id/bottom_share"
@@ -25,27 +24,28 @@
         android:layout_margin="6dp"
         android:background="@drawable/detail_btn"
         android:gravity="center"
+        android:text="分享"
         android:textColor="#ffffff"
-        android:textSize="16dp" 
-         android:text="分享"/>
+        android:textSize="16dp" />
 
-<!--     <FrameLayout
-        android:visibility="gone"
+    <FrameLayout
         android:id="@+id/progress_layout"
         android:layout_width="match_parent"
         android:layout_height="38dp"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/bottom_share"
-        android:layout_toRightOf="@id/bottom_favorites" >
+        android:layout_toRightOf="@id/bottom_favorites"
+        android:background="@drawable/detail_btn">
 
         <ProgressBar
             android:id="@+id/pb_load_process"
             style="?android:attr/progressBarStyleHorizontal"
+            android:progressDrawable="@drawable/progress_drawable"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/progress_bg"
-            android:progressDrawable="@drawable/progress_drawable"
-            android:visibility="invisible" />
+            android:progress="0"
+            android:max="100"
+             />
 
         <TextView
             android:id="@+id/tv_load_process"
@@ -55,7 +55,7 @@
             android:text="暂停"
             android:textColor="#ffffff"
             android:textSize="18sp" />
-    </FrameLayout> -->
+    </FrameLayout>
 
     <Button
         android:id="@+id/progress_btn"
@@ -66,9 +66,8 @@
         android:layout_toRightOf="@id/bottom_favorites"
         android:background="@drawable/progress_btn"
         android:gravity="center"
+        android:text="下载"
         android:textColor="#ffffff"
-        android:textSize="18dp" 
-        android:text="下载">
-    </Button>
+        android:textSize="18dp" />
 
 </RelativeLayout>

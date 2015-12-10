@@ -35,8 +35,7 @@
                     android:id="@+id/action_progress"
                     android:layout_width="27dp"
                     android:layout_height="27dp"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/ic_download" />
+                    android:layout_centerHorizontal="true"/>
 
                 <TextView
                     android:id="@+id/action_txt"

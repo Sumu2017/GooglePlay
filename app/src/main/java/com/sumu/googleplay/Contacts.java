@@ -22,4 +22,6 @@ public class Contacts {
     public static final String DETAIL_URL = URL + "detail?packageName=";
     public static final String HOT_URL = URL + "hot?";
     public static final String RECOMMEND_URL = URL + "recommend?";
+    public static final String DOWNLOAD_APK_URL = URL + "download?name=";
+    public static final String DOWNLOAD_APK_URL_RANGE ="&range=";
 }

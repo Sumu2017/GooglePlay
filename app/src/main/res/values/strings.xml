@@ -32,4 +32,9 @@
     <string name="item_date">时间:</string>
     <string name="item_size">大小:</string>
     <string name="des_author">作者:</string>
+    <string name="app_state_download">下载</string>
+    <string name="app_state_paused">暂停</string>
+    <string name="app_state_error">失败</string>
+    <string name="app_state_waiting">等待</string>
+    <string name="app_state_downloaded">安装</string>
 </resources>

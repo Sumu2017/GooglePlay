@@ -25,6 +25,7 @@ public class GameFragment extends BaseFragment{
 
     private List<AppInfo> gameAppInfos;
     private GameProtocol gameProtocol;
+    private AppAdapter gameAppAdapter;
 
     @Override
     protected LoadingPage.LoadResult load() {
@@ -36,15 +37,34 @@ public class GameFragment extends BaseFragment{
     @Override
     protected View createSuccessView() {
         BaseListView listView=new BaseListView(context);
-        AppAdapter gameAppAdapter= new AppAdapter(context, gameAppInfos,listView) {
+        gameAppAdapter = new AppAdapter(context, gameAppInfos,listView) {
             @Override
             protected List<AppInfo> getMoreDataFromServer() {
                 return gameProtocol.load(gameAppInfos.size());
             }
         };
+        gameAppAdapter.startObserver();
         listView.setOnScrollListener(new PauseOnScrollListener(bitmapUtils,false,true));
         listView.setAdapter(gameAppAdapter);
         return listView;
+    }
+
+    /** 可见时，需要启动监听，以便随时根据下载状态刷新页面 */
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(gameAppAdapter!=null){
+            gameAppAdapter.startObserver();
+            gameAppAdapter.notifyDataSetChanged();
+        }
+    }
+    /** 不可见时，需要关闭监听 */
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (gameAppAdapter != null) {
+            gameAppAdapter.stopObserver();
+        }
     }
 
 

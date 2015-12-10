@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -13,48 +14,84 @@ import com.sumu.googleplay.adapter.holder.BaseViewHolder;
 import com.sumu.googleplay.adapter.holder.MoreViewHolder;
 import com.sumu.googleplay.manager.ThreadManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * ==============================
  * 作者：苏幕
- * <p>
+ * <p/>
  * 时间：2015/11/24   12:35
- * <p>
+ * <p/>
  * 描述：
  * <p>所有ListView适配器的基类
  * ==============================
  */
-public abstract class DefaultAdapter<T> extends BaseAdapter implements AdapterView.OnItemClickListener {
+public abstract class DefaultAdapter<T> extends BaseAdapter implements AbsListView.RecyclerListener, AdapterView.OnItemClickListener {
     protected Context context;
     protected List<T> datas;
     private static final int ITEM_MORE = 0;//加载更多条目
     private static final int ITEM_NORM = 1;//普通条目
     private ListView listView;
-    private boolean isMoreHolder=true;//是否需要加载更多
-    public DefaultAdapter(Context context, List<T> datas,ListView listView) {
+    private boolean isMoreHolder = true;//是否需要加载更多
+    private List<BaseViewHolder> mDisplayedHolders;//用于记录所有显示的holder
+
+    public DefaultAdapter(Context context, List<T> datas, ListView listView) {
         this.context = context;
         this.datas = datas;
-        this.listView=listView;
-        listView.setOnItemClickListener(this);
+        this.listView = listView;
+        if (null != listView) {
+            listView.setOnItemClickListener(this);
+            listView.setRecyclerListener(this);
+        }
+        mDisplayedHolders=new ArrayList<>();
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        position=position-listView.getHeaderViewsCount();//获取到顶部条目的数量   位置去掉顶部view的数量
+        position = position - listView.getHeaderViewsCount();//获取到顶部条目的数量   位置去掉顶部view的数量
         onMyItemClick(position);
     }
 
     /**
+     * ListView回收的item等下次复用时，会调用此方法，可以在此方法中，释放资源
+     * @param view
+     */
+    @Override
+    public void onMovedToScrapHeap(View view) {
+        if (null != view) {
+            Object tag = view.getTag();
+            if (tag instanceof BaseViewHolder) {
+                BaseViewHolder holder = (BaseViewHolder) tag;
+                synchronized (mDisplayedHolders) {
+                    mDisplayedHolders.remove(holder);
+                }
+            }
+        }
+    }
+
+    /**
+     * 获取所有可见的Holder
+     * @return
+     */
+    public List<BaseViewHolder> getDisplayedHolders(){
+        synchronized (mDisplayedHolders){
+            return new ArrayList<BaseViewHolder>(mDisplayedHolders);
+        }
+    }
+
+    /**
      * 是否需要加载更多，默认需要
+     *
      * @param isMoreHolder
      */
-    public void setIsMoreHolder(boolean isMoreHolder){
-        this.isMoreHolder=isMoreHolder;
+    public void setIsMoreHolder(boolean isMoreHolder) {
+        this.isMoreHolder = isMoreHolder;
     }
 
     /**
      * 让子类去实现点击事件的具体操作
+     *
      * @param position
      */
     public abstract void onMyItemClick(int position);
@@ -78,9 +115,9 @@ public abstract class DefaultAdapter<T> extends BaseAdapter implements AdapterVi
 
     @Override
     public int getCount() {
-        if (isMoreHolder){//如果需要加载更多则多加一个Item用来显示加载更多Holder
+        if (isMoreHolder) {//如果需要加载更多则多加一个Item用来显示加载更多Holder
             return datas.size() + 1;
-        }else {
+        } else {
             return datas.size();
         }
 
@@ -116,8 +153,10 @@ public abstract class DefaultAdapter<T> extends BaseAdapter implements AdapterVi
                 viewHolder.setDataToView(getItem(position));
                 break;
         }
+        mDisplayedHolders.add(viewHolder);
         return viewHolder.getConvertView();
     }
+
 
     private MoreViewHolder moreViewHolder = null;
 

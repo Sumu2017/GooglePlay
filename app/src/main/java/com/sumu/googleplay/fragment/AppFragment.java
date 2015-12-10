@@ -25,6 +25,7 @@ public class AppFragment extends BaseFragment {
 
     private List<AppInfo> appInfos;
     private AppProtocol appProtocol;
+    private AppAdapter appAdapter;
 
     @Override
     protected LoadingPage.LoadResult load() {
@@ -37,16 +38,32 @@ public class AppFragment extends BaseFragment {
     @Override
     protected View createSuccessView() {
         BaseListView listView = new BaseListView(context);
-        AppAdapter appAdapter = new AppAdapter(context, appInfos,listView) {
+        appAdapter = new AppAdapter(context, appInfos,listView) {
             @Override
             protected List<AppInfo> getMoreDataFromServer() {
                 return appProtocol.load(appInfos.size());
             }
         };
+        appAdapter.startObserver();
         listView.setOnScrollListener(new PauseOnScrollListener(bitmapUtils, false, true));
         listView.setAdapter(appAdapter);
         return listView;
     }
-
-
+    /** 可见时，需要启动监听，以便随时根据下载状态刷新页面 */
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(appAdapter!=null){
+            appAdapter.startObserver();
+            appAdapter.notifyDataSetChanged();
+        }
+    }
+    /** 不可见时，需要关闭监听 */
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (appAdapter != null) {
+            appAdapter.stopObserver();
+        }
+    }
 }

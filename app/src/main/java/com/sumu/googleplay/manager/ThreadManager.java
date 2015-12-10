@@ -18,6 +18,7 @@ public class ThreadManager {
 
     private ThreadPoolProxy longPool;
     private ThreadPoolProxy shortPool;
+    private ThreadPoolProxy mDownloadPool;
 
     private ThreadManager() {
     }
@@ -46,6 +47,16 @@ public class ThreadManager {
             shortPool = new ThreadPoolProxy(5, 5, 5000L);
         }
         return shortPool;
+    }
+
+    /**
+     * 获取下载线程
+     */
+    public synchronized ThreadPoolProxy getDownloadPool() {
+        if (mDownloadPool == null) {
+            mDownloadPool = new ThreadPoolProxy(3, 3, 5000L);
+        }
+        return mDownloadPool;
     }
 
     /**
@@ -89,7 +100,7 @@ public class ThreadManager {
          *
          * @param runnable
          */
-        public void cancel(Runnable runnable) {
+        public synchronized void cancel(Runnable runnable) {
             //不为空，没有崩溃，没有停止
             if (poolExecutor != null && !poolExecutor.isShutdown() && !poolExecutor.isTerminated()) {
                 poolExecutor.remove(runnable);// 取消异步任务
